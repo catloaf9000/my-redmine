@@ -1,6 +1,24 @@
 #!/bin/sh
 cd /opt/redmine-5.0.7/
 CONTAINER_FIRST_STARTUP="CONTAINER_FIRST_STARTUP"
+
+if [ -z $POSTGRES_HOST ]; then
+    cat >&2 <<-'EOE'
+			Error: Database host is not specified.
+			       You must specify POSTGRES_HOST as IP address or DNS name. 
+			       For example, "-e POSTGRES_HOST=localhost" on "docker run".
+	EOE
+	exit 1
+fi
+if [ -z $POSTGRES_PASSWORD ]; then
+    cat >&2 <<-'EOE'
+			Error: Database password is not specified.
+			       You must specify POSTGRES_PASSWORD to a non-empty value for the
+			       superuser. For example, "-e POSTGRES_PASSWORD=password" on "docker run".
+	EOE
+	exit 1
+fi
+
 if [ ! -e /$CONTAINER_FIRST_STARTUP ]; then
     touch /$CONTAINER_FIRST_STARTUP
     cat ./config/database.yml.template | envsubst > ./config/database.yml
