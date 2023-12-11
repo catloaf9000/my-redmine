@@ -8,9 +8,13 @@ RUN apt-get update && apt-get install -y \
     gcc \
     libpq-dev \
     tzdata \
-    gettext
+    gettext \
+    wget
 
-COPY ./redmine-5.0.7 /opt/redmine-5.0.7
+RUN wget -P /tmp/ https://www.redmine.org/releases/redmine-5.0.7.tar.gz && \
+    tar -xzf /tmp/redmine-5.0.7.tar.gz -C /opt/
+
+COPY ./database.yml.template /opt/redmine-5.0.7/config/database.yml.template
 WORKDIR /opt/redmine-5.0.7/
 RUN gem install bundler && \
     chown -R $USER: /opt/redmine-5.0.7 && \
