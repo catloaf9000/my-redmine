@@ -1,5 +1,6 @@
 FROM ubuntu:jammy
 ENV POSTGRES_USER=postgres
+# ARG and ENV for tzdata
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
 RUN apt-get update && apt-get install -y \
@@ -24,4 +25,5 @@ RUN gem install bundler && \
 
 COPY entrypoint.sh /usr/local/bin/
 ENTRYPOINT [ "entrypoint.sh" ]
+CMD ["bundle exec rails server -u puma -e production"]
 EXPOSE 3000

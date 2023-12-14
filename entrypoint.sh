@@ -29,4 +29,4 @@ if [ ! -e /$CONTAINER_FIRST_STARTUP ]; then
     mkdir -p tmp tmp/pdf public/plugin_assets
     find files log tmp public/plugin_assets -type f -exec chmod -x {} +
 fi
-bundle exec rails server -u puma -e production
+exec sh -c "$@"
