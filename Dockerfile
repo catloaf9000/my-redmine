@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     tzdata \
     gettext \
-    wget
+    wget \
+    postgresql-client
 
 RUN wget -P /tmp/ https://www.redmine.org/releases/redmine-5.0.7.tar.gz && \
     tar -xzf /tmp/redmine-5.0.7.tar.gz -C /opt/
