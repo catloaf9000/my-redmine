@@ -1,0 +1,27 @@
+version: '3'
+services:
+  redmine:
+    build: .
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+    networks:
+      - front-tier
+      - back-tier
+    ports:
+      - "80:3000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: "postgres:14"
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+    networks:
+      - back-tier 
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+
+networks:
+  front-tier:
+  back-tier:
